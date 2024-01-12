@@ -4,3 +4,6 @@
 
 # Clojure
 .cpcache
+
+# Clojure nREPL
+.nrepl-port

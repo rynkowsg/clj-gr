@@ -1,0 +1,5 @@
+{:paths ["src"]
+
+ :deps {;; sorted
+        com.hyperfiddle/rcf {:mvn/version "20220926-202227"}
+        org.clojure/clojure {:mvn/version "1.11.1"}}}

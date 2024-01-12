@@ -5,7 +5,11 @@
 
  :aliases
  {:lib/all
-  {:extra-deps {cell/pom {:local/root "lib/pom"}}}
+  {:extra-deps {cell/bb {:local/root "lib/bb"}
+                cell/pom {:local/root "lib/pom"}}}
+
+  :mod/repl
+  {:extra-deps {mod/repl {:local/root "mod/repl"}}}
 
   ;; UTILS ALIASES
 

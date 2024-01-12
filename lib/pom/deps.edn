@@ -1,0 +1,15 @@
+{:paths ["src"]
+
+ :deps {;; sorted
+        com.hyperfiddle/rcf {:mvn/version "20220926-202227"}
+        io.github.clojure/tools.build {:mvn/version "0.9.4"}}
+
+ :aliases
+ {:test
+  {:extra-paths []
+   :extra-deps {}
+   :jvm-opts ["-Dhyperfiddle.rcf.generate-tests=true"]}
+
+  :tool/kaocha
+  {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}
+                lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}}}}}

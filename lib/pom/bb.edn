@@ -1,0 +1,2 @@
+{:tasks
+ {test (clojure "-M:test:tool/kaocha -m kaocha.runner --config-file tests.edn")}}

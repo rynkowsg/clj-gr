@@ -1,0 +1,30 @@
+{:min-bb-version "1.3.186"
+
+ :deps {}
+
+ :init (do
+         ;; I can't pass `.` to cljfmt because it would also format content of .clj-kondo/
+         ;; and these are placed there by clj-kondo and if changed, are corrected by clj-kondo.
+         ;; To avoid going back and forth, I can omit .clj-kondo/ by specifying a list of files to scan
+         ;; effectively ignoring that directory that way.
+         (def fmt-sources (str/join " " [".cljfmt.edn" "bb.edn" "deps.edn" "lib" "snoop.edn"])))
+
+ :tasks
+ {deps (print-exec '(clojure "-M:tool/antq -m antq.core") *command-line-args*)
+  deps:upgrade (shell "bb deps --upgrade")
+
+  fmt (print-exec '(clojure "-M:tool/cljfmt -m cljfmt.main") *command-line-args*)
+  fmt:check (shell (str "bb fmt check " fmt-sources))
+  fmt:fix (shell (str "bb fmt fix " fmt-sources))
+
+  loc {:extra-deps {io.github.matthewdowney/linesofcode-bb {:git/tag "v0.0.2" :git/sha "12e4f52"}}
+       :requires ([com.mjdowney.loc :as loc])
+       :task (loc/summarize {:root ["."] :exclude []})}
+
+  lint (let [dirs ["."]
+             cmd-format (str "clj-kondo --lint '%s' --parallel --copy-configs --config-dir .clj-kondo")
+             cmd (format cmd-format (str/join ":" dirs))]
+         (println "[CMD]:" cmd "\n----")
+         (shell cmd))
+
+  test (do (shell {:dir "lib/pom"} "bb test"))}}

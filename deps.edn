@@ -11,7 +11,8 @@
   {:extra-deps {mod/repl {:local/root "mod/repl"}}}
 
   :lib/all
-  {:extra-deps {pl.rynkowski.clj-gr/bb {:local/root "lib/bb"}}}
+  {:extra-deps {pl.rynkowski.clj-gr/bb {:local/root "lib/bb"}
+                pl.rynkowski.clj-gr/repl-user {:local/root "lib/repl-user"}}}
 
   ;; UTILS ALIASES
 

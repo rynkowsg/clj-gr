@@ -27,4 +27,4 @@
          (println "[CMD]:" cmd "\n----")
          (shell cmd))
 
-  test (do)}}
+  test (do (shell {:dir "lib/bb"} "bb test"))}}

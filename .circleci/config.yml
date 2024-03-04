@@ -1,0 +1,58 @@
+version: 2.1
+
+orbs:
+  asdf: rynkowsg/asdf@0.1.1
+  checkout-orb: rynkowsg/checkout-orb@0.1.4
+
+executors:
+  docker_x86_cimg:
+    docker: [{image: cimg/base:2024.02}]
+    # https://circleci.com/developer/images/image/cimg/base
+    resource_class: small
+    # https://circleci.com/docs/configuration-reference/#docker-execution-environment
+
+jobs:
+  test:
+    executor: docker_x86_cimg
+    steps:
+      - checkout-orb/checkout: {depth: 1}
+      - asdf/install: {version: 0.14.0}
+      - restore_cache:
+          name: asdf - restore cache (partial)
+          keys:
+            - asdf-{{ checksum ".tool-versions" }}
+      - run:
+          name: asdf - add plugin
+          command: |
+            set -x
+            cd /tmp
+            git config --global advice.detachedHead false
+            asdf plugin add babashka https://github.com/fredZen/asdf-babashka.git
+            asdf plugin add clj-kondo https://github.com/rynkowsg/asdf-clj-kondo.git
+            asdf plugin add clojure https://github.com/halcyon/asdf-clojure.git
+            asdf plugin add java https://github.com/rynkowsg/asdf-java.git
+      - run:
+          name: asdf - install tools
+          command: |
+            set -x
+            # java needs to be installed ahead of the rest. Otherwise clojure installation would fail.
+            asdf install java
+            asdf install
+            . ~/.asdf/plugins/java/set-java-home.bash
+            bb --version
+            clojure --version
+            clj-kondo --version
+            java --version
+      - save_cache:
+          name: asdf - save cache (partial)
+          key: asdf-{{ checksum ".tool-versions" }}
+          paths:
+            - ~/.asdf/installs
+            - ~/.asdf/plugins
+            - ~/.asdf/shims
+      - run: bb test
+
+workflows:
+  main:
+    jobs:
+      - test

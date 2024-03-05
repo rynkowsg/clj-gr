@@ -1,9 +1,11 @@
-# JetBrains IDE
-.idea
+# JetBrains IDEs
+/.idea/*
+!/.idea/codeStyles/
+!/.idea/dictionaries/
+!/.idea/repl-commands.xml
+!/.idea/runConfigurations/
 *.iml
 
 # Clojure
 .cpcache
-
-# Clojure nREPL
 .nrepl-port

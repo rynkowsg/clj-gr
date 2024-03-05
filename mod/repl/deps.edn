@@ -1,7 +1,8 @@
 {:paths ["src"]
 
  :deps {;; sorted
-        com.hyperfiddle/rcf {:mvn/version "20220926-202227"}
+        com.hyperfiddle/rcf {:mvn/version "20220926-202227"} ;; REPL-first testing
+        io.github.matthewdowney/rich-comment-tests {:git/tag "v1.0.3" :git/sha "a8711e9"} ;; REPL-first testing
         org.clojure/clojure {:mvn/version "1.11.1"}
         pl.rynkowski.clj-gr/repl-user {:local/root "../../lib/repl-user"} ;; provides standard user.clj
         #_:deps}}

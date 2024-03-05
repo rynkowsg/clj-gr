@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ReplProjectCommandManager">
+    <repl-command name="Run RCT tests" executionType="EXPRESSION" selectedForm="TOP_FORM" commandText="((requiring-resolve 'com.mjdowney.rich-comment-tests/run-ns-tests!) *ns*)" echo="FORM" addToHistory="true" executeBefore="LOAD_CURRENT" executeAfter="NONE" executionNs="REPL_CURRENT" inNamespace="" saveAll="true" clearRepl="false" printOutput="true" replaceForm="false" copyResult="false" insertIntoEditor="false" />
+  </component>
+</project>

@@ -2,4 +2,6 @@
 
  :deps {;; sorted
         com.hyperfiddle/rcf {:mvn/version "20220926-202227"}
-        org.clojure/clojure {:mvn/version "1.11.1"}}}
+        org.clojure/clojure {:mvn/version "1.11.1"}
+        pl.rynkowski.clj-gr/repl-user {:local/root "../../lib/repl-user"} ;; provides standard user.clj
+        #_:deps}}

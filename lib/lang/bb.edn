@@ -3,8 +3,7 @@
   pl.rynkowski.clj-gr/bb {:local/root "../../lib/bb"}}
 
  :tasks
- {:requires ([pl.rynkowski.clj-gr.bb :refer [print-exec]]
-             [clojure.pprint :refer [pprint]])
+ {:requires ([pl.rynkowski.clj-gr.bb :refer [print-exec]])
 
   test {:depends [test:bb test:clj]}
   test:bb {:task (let [test-deps {:deps (-> (slurp "deps.edn") read-string :aliases :test :extra-deps)}]

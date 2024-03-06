@@ -2,9 +2,9 @@
 
 (defn named-groups
   "Looks for groups named with pattern like (?<name>...) and returns map (name, value) for each named group found."
-  [regex text]
-  (let [named-groups (->> (re-seq #"\?\<([a-zA-Z0-9]+)\>" (str regex)) (map second))
-        matcher (re-matcher regex text)]
+  [^java.util.regex.Pattern re s]
+  (let [named-groups (->> (re-seq #"\?\<([a-zA-Z0-9]+)\>" (str re)) (map second))
+        matcher (re-matcher re s)]
     (when (.matches matcher)
       (->> named-groups
            (map (fn [^String word] [(keyword word) (.group matcher word)]))

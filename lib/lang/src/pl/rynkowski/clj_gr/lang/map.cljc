@@ -7,7 +7,7 @@
 
 ^:rct/test
 (comment #_((requiring-resolve 'com.mjdowney.rich-comment-tests/run-ns-tests!) *ns*)
-  "simples case"
+  "simple case"
   (vals->keys {:a "A" :b "B" :c "C"}) ;; => {"A" :a "B" :b "C" :c}
 
   "the next one overwrites the previous one"

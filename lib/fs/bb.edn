@@ -1,0 +1,12 @@
+{:deps
+ {pl.rynkowski.clj-gr/bb {:local/root "../../lib/bb"}
+  pl.rynkowski.clj-gr/fs {:local/root "."}}
+
+ :tasks
+ {:requires ([pl.rynkowski.clj-gr.bb :refer [print-exec]])
+
+  test {:depends [test:bb test:clj]}
+  test:bb {:task (let [test-deps {:deps (-> (slurp "deps.edn") read-string :aliases :test :extra-deps)}]
+                   (shell (format "bb -Sdeps '%s' -m kaocha.runner/-main --config-file tests.edn" test-deps)))}
+  test:clj (print-exec '(clojure "-M:test -m kaocha.runner --config-file tests.edn") *command-line-args*)
+  #_:tasks}}

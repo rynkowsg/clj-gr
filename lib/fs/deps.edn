@@ -1,0 +1,11 @@
+{:paths ["src"]
+
+ :deps {}
+
+ :aliases
+ {:test {:extra-paths ["test"]
+         :extra-deps {;; sorted
+                      io.github.matthewdowney/rich-comment-tests {:git/tag "v1.0.3" :git/sha "a8711e9"}
+                      lambdaisland/kaocha {:mvn/version "1.87.1366"}
+                      lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}
+                      #_:extra-deps}}}}

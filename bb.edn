@@ -29,5 +29,6 @@
 
   test (do
          (shell {:dir "lib/bb"} "bb test")
+         (shell {:dir "lib/fs"} "bb test")
          (shell {:dir "lib/lang"} "bb test")
          (shell {:dir "lib/repl-user"} "bb test"))}}

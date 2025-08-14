@@ -1,0 +1,7 @@
+{:paths ["lib/main/src"]
+
+ :deps {;; sorted
+        com.cognitect.aws/api {:mvn/version "0.8.762"}
+        mod-gr/aws-api {:local/root "../../lib/aws-api"}}}
+
+;; https://github.com/cognitect-labs/aws-api/blob/main/latest-releases.edn

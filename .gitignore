@@ -9,3 +9,6 @@
 # Clojure
 .cpcache
 .nrepl-port
+
+# Custom
+repl

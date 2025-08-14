@@ -1,0 +1,9 @@
+{:paths ["lib/main/src"]
+
+ :deps {;; sorted
+        com.cognitect.aws/endpoints {:mvn/version "871.2.32.21"}
+        com.cognitect.aws/ssm {:mvn/version "871.2.32.5" :aws/serviceFullName "Amazon Simple Systems Manager (SSM)"}
+        org.clojure/clojure {:mvn/version "1.12.1"}
+        pl.rynkowski.clj-gr/aws-api {:local/root "../../lib/aws-api"}}}
+
+;; https://github.com/cognitect-labs/aws-api/blob/main/latest-releases.edn

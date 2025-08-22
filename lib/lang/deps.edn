@@ -1,6 +1,6 @@
 {:paths ["src"]
 
- :deps {}
+ :deps {commons-io/commons-io {:mvn/version "2.20.0"}}
 
  :aliases
  {:test {:extra-paths ["test"]

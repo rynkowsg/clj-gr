@@ -37,8 +37,10 @@ jobs:
             set -x
             # java needs to be installed ahead of the rest. Otherwise clojure installation would fail.
             asdf install java
-            asdf install
             . ~/.asdf/plugins/java/set-java-home.bash
+            asdf install babashka
+            asdf install clj-kondo
+            asdf install clojure
             bb --version
             clojure --version
             clj-kondo --version

@@ -16,10 +16,10 @@
        doc-str
        doc
        stop] (or
-              ;; this should always work in babashka
-              (try-require 'pl.rynkowski.clj-gr.aws-api.internal.awyeah/fns)
-              ;; this needs to be added to the classpath explicitly
-              (try-require 'pl.rynkowski.clj-gr.aws-api.internal.cognitect/fns))]
+               ;; this should always work in babashka
+               (try-require 'pl.rynkowski.clj-gr.aws-api.internal.awyeah/fns)
+               ;; this needs to be added to the classpath explicitly
+               (try-require 'pl.rynkowski.clj-gr.aws-api.internal.cognitect/fns))]
   (def backend backend)
   (def client client)
   (def invoke invoke)
@@ -31,5 +31,4 @@
   (def ops ops)
   (def doc-str doc-str)
   (def doc doc)
-  (def stop stop)
-  ,)
+  (def stop stop))

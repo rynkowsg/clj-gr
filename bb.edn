@@ -1,16 +1,20 @@
 {:min-bb-version "1.3.186"
 
- :deps {}
-
- :init (do
-         ;; I can't pass `.` to cljfmt because it would also format content of .clj-kondo/
-         ;; and these are placed there by clj-kondo and if changed, are corrected by clj-kondo.
-         ;; To avoid going back and forth, I can omit .clj-kondo/ by specifying a list of files to scan
-         ;; effectively ignoring that directory that way.
-         (def fmt-sources (str/join " " [".cljfmt.edn" "bb.edn" "deps.edn" "lib" "snoop.edn"])))
+ :deps
+ {pl.rynkowski.clj-gr/bb {:local/root "lib/bb"}}
 
  :tasks
- {deps (print-exec '(clojure "-M:tool/antq -m antq.core") *command-line-args*)
+ {:requires ([clojure.string :as str]
+             [pl.rynkowski.clj-gr.bb :refer [print-exec]])
+
+  :init (do
+          ;; I can't pass `.` to cljfmt because it would also format content of .clj-kondo/
+          ;; and these are placed there by clj-kondo and if changed, are corrected by clj-kondo.
+          ;; To avoid going back and forth, I can omit .clj-kondo/ by specifying a list of files to scan
+          ;; effectively ignoring that directory that way.
+          (def fmt-sources (str/join " " [".cljfmt.edn" "bb.edn" "deps.edn" "lib"])))
+
+  deps (print-exec '(clojure "-M:tool/antq -m antq.core") *command-line-args*)
   deps:upgrade (shell "bb deps --upgrade")
 
   fmt (print-exec '(clojure "-M:tool/cljfmt -m cljfmt.main") *command-line-args*)

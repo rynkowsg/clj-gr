@@ -1,10 +1,10 @@
 (ns pl.rynkowski.clj-gr.aws-ssm
   (:require
-   [pl.rynkowski.aws-api :as aws]))
+    [pl.rynkowski.aws-api :as aws]))
 
 (def client
   (delay
-   (aws/client {:api :ssm})))
+    (aws/client {:api :ssm})))
 
 (defn param
   "Returns the plaintext value of an SSM parameter (supports SecureString)."
@@ -17,4 +17,4 @@
        (throw (ex-info "GetParameter failed" resp))
        (get-in resp [:Parameter :Value])))))
 
-#_ (param "/sample/API_KEY")
+#_(param "/sample/API_KEY")

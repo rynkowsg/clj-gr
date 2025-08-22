@@ -29,4 +29,4 @@
                   org.slf4j/slf4j-nop {:mvn/version "2.0.11"}}}
 
   :tool/cljfmt
-  {:replace-deps {dev.weavejester/lein-cljfmt {:mvn/version "0.12.0"}}}}}
+  {:replace-deps {dev.weavejester/cljfmt {:mvn/version "0.13.1"}}}}}

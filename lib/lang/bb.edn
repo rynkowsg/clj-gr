@@ -1,5 +1,5 @@
 {:deps
- {pl.rynkowski.clj-gr/lang {:local/root "."}
+ {;; sorted
   pl.rynkowski.clj-gr/bb {:local/root "../../lib/bb"}}
 
  :tasks

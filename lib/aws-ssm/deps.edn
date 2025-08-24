@@ -3,7 +3,7 @@
  :deps {;; sorted
         com.cognitect.aws/endpoints {:mvn/version "871.2.32.21"}
         com.cognitect.aws/ssm {:mvn/version "871.2.32.5" :aws/serviceFullName "Amazon Simple Systems Manager (SSM)"}
-        pl.rynkowski.clj-gr/aws-api {:git/url "https://github.com/rynkowsg/clj-gr.git" :git/tag "v0.0.1" :git/sha "f5e41939e7101f7e128f3ba5cb689ac8cc764714" :deps/root "lib/aws-api"}}
+        pl.rynkowski.clj-gr/aws-api {:git/url "https://github.com/rynkowsg/clj-gr.git" :git/tag "v0.0.4" :git/sha "66c4fc6a1d48f00e3d807df7b398dafc95f2645a" :deps/root "lib/aws-api"}}
 
  :aliases
  {:local {:override-deps {pl.rynkowski.clj-gr/aws-api {:local/root "../../lib/aws-api"}}}}}

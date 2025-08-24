@@ -32,3 +32,20 @@
   (def doc-str doc-str)
   (def doc doc)
   (def stop stop))
+
+(def client-memoized
+  (memoize
+    (fn [opts]
+      (client opts))))
+
+(defn invoke!
+  "Like cognitect.aws.client.api/invoke, but throws ex-info when an anomaly is returned."
+  [client req]
+  (let [resp (invoke client req)]
+    (if (:cognitect.anomalies/category resp)
+      (throw (ex-info (str "AWS " (name (:op req)) " failed: "
+                           (or (:cognitect.anomalies/message resp)
+                               (some-> resp :cognitect.anomalies/category name)
+                               "unknown error"))
+                      {:origin resp}))
+      resp)))

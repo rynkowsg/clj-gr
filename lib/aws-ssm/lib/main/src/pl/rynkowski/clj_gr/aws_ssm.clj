@@ -4,7 +4,8 @@
 
 (def default-client
   (delay
-    (let [client (aws/client-memoized {:api :ssm})]
+    (let [client (aws/client-memoized {:api :ssm
+                                       :region (System/getenv "AWS_REGION")})]
       (aws/validate-requests client true)
       client)))
 #_(-> @default-client aws/ops)

@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  asdf: rynkowsg/asdf@0.1.1
-  checkout: rynkowsg/checkout@0.1.6
+  asdf: rynkowsg/asdf@0.2.0
+  checkout: rynkowsg/checkout@0.3.1
 
 executors:
   docker_x86_cimg:

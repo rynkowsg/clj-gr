@@ -1,9 +1,0 @@
-{:paths ["lib/main/src"]
-
- :deps {;; sorted
-        integrant/integrant {:mvn/version "0.13.1"}
-        org.clojure/clojure {:mvn/version "1.12.1"}
-        pl.rynkowski.clj-gr/aws-ssm {:git/url "https://github.com/rynkowsg/clj-gr.git" :git/tag "v0.0.4" :git/sha "66c4fc6a1d48f00e3d807df7b398dafc95f2645a" :deps/root "lib/aws-ssm"}}
-
- :aliases
- {:local {:override-deps {pl.rynkowski.clj-gr/aws-ssm {:local/root "../../lib/aws-ssm"}}}}}

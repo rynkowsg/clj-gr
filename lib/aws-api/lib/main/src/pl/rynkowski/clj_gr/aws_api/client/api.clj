@@ -1,12 +1,10 @@
-(ns pl.rynkowski.clj-gr.aws-api)
-
-(defn- try-require [sym]
-  (try (deref (requiring-resolve sym))
-       (catch Exception _e
-         nil)))
+(ns pl.rynkowski.clj-gr.aws-api.client.api
+ (:require
+   [pl.rynkowski.clj-gr.aws-api.internal.utils :refer [try-require]]))
 
 (let [[backend
        client
+       default-http-client
        invoke
        invoke-async
        validate-requests
@@ -17,13 +15,13 @@
        doc
        stop] (or
                ;; this should always work in babashka
-               (try-require 'pl.rynkowski.clj-gr.aws-api.internal.awyeah/fns)
+               (try-require 'pl.rynkowski.clj-gr.aws-api.internal.awyeah.client.api/fns)
                ;; this needs to be added to the classpath explicitly
-               (try-require 'pl.rynkowski.clj-gr.aws-api.internal.cognitect/fns))]
+               (try-require 'pl.rynkowski.clj-gr.aws-api.internal.cognitect.client.api/fns))]
   (def backend backend)
   (def client client)
+  (def default-http-client default-http-client)
   (def invoke invoke)
-  (def invoke-async invoke-async)
   (def invoke-async invoke-async)
   (def validate-requests validate-requests)
   (def request-spec-key request-spec-key)

@@ -2,7 +2,7 @@
 
  :deps {;; sorted
         com.cognitect.aws/api {:mvn/version "0.8.762"} ;; https://github.com/cognitect-labs/aws-api/blob/main/latest-releases.edn
-        pl.rynkowski.clj-gr/aws-api {:git/url "https://github.com/rynkowsg/clj-gr.git" :git/tag "v0.0.5" :git/sha "e35c1ce72df08bb797394d4d431afd29de52fed8" :deps/root "lib/aws-api"}}
+        pl.rynkowski.clj-gr/aws-api #:git{:url "https://github.com/rynkowsg/clj-gr.git" :tag "v0.0.6" :sha "403f932437c54c6426a7e61535e3e83b2e83bcae" :deps/root "lib/aws-api"}}
 
  :aliases
  {:local {:override-deps {pl.rynkowski.clj-gr/aws-api {:local/root "../../lib/aws-api"}}}}}

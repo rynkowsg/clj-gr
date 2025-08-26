@@ -7,7 +7,7 @@
         org.clojure/data.xml {:mvn/version "0.2.0-alpha9"} ;; needed by awyeah-api
         org.clojure/tools.logging {:mvn/version "1.3.0"} ;; needed by awyeah-api
         org.slf4j/slf4j-nop {:mvn/version "2.0.17"} ;; needed by org.clojure/tools.logging
-        pl.rynkowski.clj-gr/aws-api #:git{:url "https://github.com/rynkowsg/clj-gr.git" :tag "v0.0.6" :sha "403f932437c54c6426a7e61535e3e83b2e83bcae" :deps/root "lib/aws-api"}}
+        pl.rynkowski.clj-gr/aws-api #:git{:url "https://github.com/rynkowsg/clj-gr.git" :tag "v0.0.8" :sha "a08cdf8e302a61116c17f013872bcefe7158e7bf" :deps/root "lib/aws-api"}}
 
  :aliases
  {:local {:override-deps {pl.rynkowski.clj-gr/aws-api {:local/root "../../lib/aws-api"}}}}}

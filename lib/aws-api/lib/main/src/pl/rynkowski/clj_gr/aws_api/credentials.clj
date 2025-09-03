@@ -20,11 +20,13 @@
        default-credentials-provider
        default-credentials-provider-v2
        basic-credentials-provider
-       fetch-async] (or
-                      ;; this should always work in babashka
-                      (try-require 'pl.rynkowski.clj-gr.aws-api.internal.awyeah.credentials/fns)
-                      ;; this needs to be added to the classpath explicitly
-                      (try-require 'pl.rynkowski.clj-gr.aws-api.internal.cognitect.credentials/fns))]
+       fetch-async
+       assumed-role-credentials-provider
+       #_:end] (or
+                 ;; this should always work in babashka
+                 (try-require 'pl.rynkowski.clj-gr.aws-api.internal.awyeah.credentials/fns)
+                 ;; this needs to be added to the classpath explicitly
+                 (try-require 'pl.rynkowski.clj-gr.aws-api.internal.cognitect.credentials/fns))]
   (def backend backend)
   (def CredentialsProvider CredentialsProvider)
   (def Stoppable Stoppable)
@@ -44,4 +46,5 @@
   (def default-credentials-provider default-credentials-provider)
   (def default-credentials-provider-v2 default-credentials-provider-v2)
   (def basic-credentials-provider basic-credentials-provider)
-  (def fetch-async fetch-async))
+  (def fetch-async fetch-async)
+  (def assumed-role-credentials-provider assumed-role-credentials-provider))

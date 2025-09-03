@@ -1,5 +1,6 @@
 (ns pl.rynkowski.clj-gr.aws-api.internal.awyeah.credentials
   (:require
+    [com.grzm.awyeah.client.api :as aws]
     [com.grzm.awyeah.credentials :refer [CredentialsProvider
                                          fetch
                                          Stoppable
@@ -45,6 +46,30 @@
                  (instance-profile-credentials-provider http-client)]
      :valid-provider-cached? valid-provider-cached?}))
 
+(defn assumed-role-credentials-provider
+  "Returns a CredentialsProvider that calls STS:AssumeRole using `source-provider`.
+   Wrapped with cached auto-refresh so creds renew before expiration."
+  [{:keys [source-provider role-arn http-client session-name]
+    :or {http-client (aws/default-http-client)
+         session-name (str (System/currentTimeMillis))}}]
+  (let [sts-request (cond-> {:api :sts
+                             :http-client http-client}
+                            source-provider (assoc :credentials-provider source-provider))
+        sts (aws/client sts-request)
+        base (reify CredentialsProvider
+               (fetch [_]
+                 (let [resp (aws/invoke sts {:op :AssumeRole
+                                             :request {:RoleArn role-arn
+                                                       :RoleSessionName session-name}})
+                       {:keys [AccessKeyId SecretAccessKey SessionToken Expiration]} (:Credentials resp)
+                       res {:aws/access-key-id AccessKeyId
+                            :aws/secret-access-key SecretAccessKey
+                            :aws/session-token SessionToken
+                            ;; ttl drives auto-refresh
+                            :cognitect.aws.credentials/ttl (calculate-ttl {:Expiration Expiration})}]
+                   res)))]
+    (cached-credentials-with-auto-refresh base)))
+
 (def fns ['grzm/awyeah-api
           CredentialsProvider
           Stoppable
@@ -63,4 +88,5 @@
           default-credentials-provider
           default-credentials-provider-v2
           basic-credentials-provider
-          fetch-async])
+          fetch-async
+          assumed-role-credentials-provider])

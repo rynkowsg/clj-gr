@@ -1,7 +1,7 @@
 {:paths ["lib/main/src"]
 
  :deps {;; sorted
-        com.cognitect.aws/api {:mvn/version "0.8.762"} ;; https://github.com/cognitect-labs/aws-api/blob/main/latest-releases.edn
+        com.cognitect.aws/api {:mvn/version "0.8.774"} ;; https://github.com/cognitect-labs/aws-api/blob/main/latest-releases.edn
         pl.rynkowski.clj-gr/aws-api #:git{:url "https://github.com/rynkowsg/clj-gr.git" :tag "v0.0.8" :sha "a08cdf8e302a61116c17f013872bcefe7158e7bf" :deps/root "lib/aws-api"}}
 
  :aliases

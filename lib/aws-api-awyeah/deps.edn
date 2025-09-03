@@ -1,7 +1,7 @@
 {:paths ["lib/main/src"]
 
  :deps {;; sorted
-        cheshire/cheshire {:mvn/version "6.0.0"} ;; needed by awyeah-api
+        cheshire/cheshire {:mvn/version "6.1.0"} ;; needed by awyeah-api
         com.grzm/awyeah-api {:git/url "https://github.com/grzm/awyeah-api" :git/sha "404ba1ae85e18d654aee813a75500515319fcd15"}
         org.clojure/core.async {:mvn/version "1.8.741"};; needed by awyeah-api
         org.clojure/data.xml {:mvn/version "0.2.0-alpha9"} ;; needed by awyeah-api

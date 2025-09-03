@@ -5,5 +5,5 @@
  :aliases
  {;; handy to enable when working on the dispatching logic
   :provided
-  {:extra-deps {com.cognitect.aws/api {:mvn/version "0.8.762"} ;; https://github.com/cognitect-labs/aws-api/blob/main/latest-releases.edn
+  {:extra-deps {com.cognitect.aws/api {:mvn/version "0.8.774"} ;; https://github.com/cognitect-labs/aws-api/blob/main/latest-releases.edn
                 com.grzm/awyeah-api {:git/url "https://github.com/grzm/awyeah-api" :git/sha "404ba1ae85e18d654aee813a75500515319fcd15"}}}}}

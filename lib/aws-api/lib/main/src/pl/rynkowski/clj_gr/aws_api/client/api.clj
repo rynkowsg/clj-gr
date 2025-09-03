@@ -1,6 +1,6 @@
 (ns pl.rynkowski.clj-gr.aws-api.client.api
- (:require
-   [pl.rynkowski.clj-gr.aws-api.internal.utils :refer [try-require]]))
+  (:require
+    [pl.rynkowski.clj-gr.aws-api.internal.utils :refer [try-require]]))
 
 (let [[backend
        client

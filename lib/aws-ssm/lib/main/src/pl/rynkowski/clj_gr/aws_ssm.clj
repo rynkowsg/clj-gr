@@ -1,6 +1,6 @@
 (ns pl.rynkowski.clj-gr.aws-ssm
   (:require
-   [pl.rynkowski.clj-gr.aws-api :as aws]))
+    [pl.rynkowski.clj-gr.aws-api :as aws]))
 
 (def default-client
   (delay
@@ -28,9 +28,8 @@
                                             :Value value
                                             :Type "SecureString"
                                             :Overwrite true}})]
-    resp)
-  ,)
-#_ (put-param! {:name "/sample/API_KEY" :value "TEST_VALUE"})
+    resp))
+#_(put-param! {:name "/sample/API_KEY" :value "TEST_VALUE"})
 
 (defn list-parameters-page
   "Fetch a single DescribeParameters page.
@@ -39,7 +38,7 @@
   (aws/invoke! client
                {:op :DescribeParameters
                 :request (cond-> {}
-                                 next-token (assoc :NextToken next-token))}))
+                           next-token (assoc :NextToken next-token))}))
 #_(list-parameters-page)
 
 (defn list-parameters
@@ -50,7 +49,7 @@
           next-token nil]
      (let [resp (list-parameters-page {:client client :next-token next-token})
            params (:Parameters resp)
-           acc'   (into acc params)]
+           acc' (into acc params)]
        (if-let [next-token' (:NextToken resp)]
          (recur acc' next-token')
          acc')))))

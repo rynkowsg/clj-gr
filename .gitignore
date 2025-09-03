@@ -9,6 +9,8 @@
 # Clojure
 .cpcache
 .nrepl-port
+# clj-kondo
+**/.clj-kondo/.cache
 
 # Custom
 repl

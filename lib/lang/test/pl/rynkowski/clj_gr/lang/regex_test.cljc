@@ -1,4 +1,4 @@
-(ns pl.rynkowski.clj-gr.lang.regex_test
+(ns pl.rynkowski.clj-gr.lang.regex-test
   (:require
     [clojure.string :as str]
     [clojure.test :refer [deftest]]

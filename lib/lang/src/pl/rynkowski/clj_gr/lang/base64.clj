@@ -75,8 +75,8 @@
   (decode->stream [_] nil))
 
 (comment
-  (-> "SGk=" decode->bytes bytes->string)
-  (-> "SGk=" string->bytes decode->string)
+  (-> "SGk=" decode->bytes lb/bytes->string)
+  (-> "SGk=" lb/string->bytes decode->string)
   (-> "SGk=" decode->string)
   (-> "SGk=" decode->stream slurp))
 

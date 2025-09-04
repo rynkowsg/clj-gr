@@ -38,7 +38,7 @@
   (aws/invoke! client
                {:op :DescribeParameters
                 :request (cond-> {}
-                           next-token (assoc :NextToken next-token))}))
+                                 next-token (assoc :NextToken next-token))}))
 #_(list-parameters-page)
 
 (defn list-parameters

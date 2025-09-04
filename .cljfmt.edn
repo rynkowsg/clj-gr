@@ -5,16 +5,18 @@
  :extra-indents {#_:sorted
                  >defn [[:inner 0]]
                  >defn- [[:inner 0]]
+                 as-> [[:inner 1]]
                  clojure.core/-> [[:block 1]]
                  clojure.core/->> [[:block 1]]
-                 clojure.core/as-> [[:inner 0]]
-                 clojure.core/as->> [[:inner 0]]
                  comment [[:inner 0]]
+                 cond-> [[:block 0]]
+                 cond->> [[:block 0]]
                  crypticbutter.snoop/>defn [[:inner 0]]
                  crypticbutter.snoop/>defn- [[:inner 0]]
-                 tests [[:block 1]]} ;; hyperfiddle.rcf/tests, same as testing
+                 tests [[:block 1]] ;; hyperfiddle.rcf/tests, same as testing
+                 #_:extra-indents}
 
- :function-arguments-indentation :cursive
+ :function-arguments-indentation :zprint
  :indentation? true
  :indent-line-comments? true
  :insert-missing-whitespace? true

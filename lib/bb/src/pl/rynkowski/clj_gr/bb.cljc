@@ -5,10 +5,14 @@
 (defn print-exec
   ([command] (print-exec command nil))
   ([command args]
-   (let [full-cmd (concat command args)]
-     (println "CMD:" (str/join " " full-cmd))
+   (let [shell? (= (first command) 'shell)
+         full-cmd (concat command args)]
+     (println "CMD:" (->> (if shell? (rest full-cmd) full-cmd)
+                          (str/join " ")))
      (println "---")
      (eval full-cmd))))
+#_(print-exec '(clojure "-M:test:tool/kaocha -m kaocha.runner --config-file tests.edn") *command-line-args*)
+#_(print-exec '(shell "bb tool:kaocha:clj :unit"))
 
 (defn deps-map
   [{:keys [path aliases]

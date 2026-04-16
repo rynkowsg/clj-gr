@@ -1,0 +1,6 @@
+#kaocha/v1 {:tests [{:id :unit
+                     :type :kaocha.type/clojure.test
+                     :source-paths ["lib/main/src"]
+                     :test-paths ["lib/main/src" "lib/test/src"]
+                     :ns-patterns [".*"]}]
+            :reporter kaocha.report/documentation}

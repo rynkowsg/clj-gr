@@ -1,0 +1,14 @@
+{:deps
+ {;; sorted
+  pl.rynkowski.clj-gr/bb {:local/root "../../lib/bb"}}
+
+ :tasks
+ {:requires ([clojure.string :as str]
+             [pl.rynkowski.clj-gr.bb :refer [print-exec deps-map]])
+
+  tool:kaocha:clj (print-exec '(clojure "-M:test:tool/kaocha -m kaocha.runner --config-file tests.edn") *command-line-args*)
+  test:unit:clj (print-exec '(shell "bb tool:kaocha:clj :unit") *command-line-args*)
+  ;; bb tests can't be run due to "clojure.lang.ExceptionInfo: Could not resolve symbol: create-struct"
+  test {:depends [test:unit:clj]}
+
+  #_:tasks}}

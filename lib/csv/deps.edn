@@ -1,0 +1,16 @@
+{:paths ["lib/main/src"]
+
+ :deps {;; sorted
+        camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.3"}
+        org.clojure/data.csv {:mvn/version "1.1.1"}}
+
+ :aliases
+ {:test
+  {:extra-paths ["lib/test/src"]
+   :extra-deps {;; sorted
+                io.github.rynkowsg/rich-comment-tests #:git{:branch "main" :sha "0e339b0648b808b3770a64253b489327b806bccb"}
+                pl.rynkowski.clj-gr/rct-utils #:git{:url "https://github.com/rynkowsg/clj-gr.git" :tag "v0.0.13" :sha "5896471a665ca979afe45e4b88fa9597c5e47ce4" :deps/root "lib/rct-utils"}}}
+
+  :tool/kaocha
+  {:extra-deps {lambdaisland/kaocha {:mvn/version "1.91.1392"}}}
+  #_:aliases}}

@@ -8,7 +8,7 @@
   test {:depends [test:bb test:clj]}
   test:bb {:task (let [test-deps {:deps (let [deps-edn (-> (slurp "deps.edn") read-string)
                                               test-deps (-> deps-edn :aliases :test :extra-deps)
-                                              final-deps (merge test-deps {'this {:local/root "."}})]
+                                              final-deps (merge test-deps {'this/root {:local/root "."}})]
                                           final-deps)}]
                    (shell (format "bb -Sdeps '%s' -m kaocha.runner/-main --config-file tests.edn" test-deps)))}
   test:clj (print-exec '(clojure "-M:test -m kaocha.runner --config-file tests.edn") *command-line-args*)

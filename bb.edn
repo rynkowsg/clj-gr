@@ -34,4 +34,5 @@
   test (do
          (shell {:dir "lib/bb"} "bb test")
          (shell {:dir "lib/lang"} "bb test")
+         (shell {:dir "lib/rct-utils"} "bb test")
          (shell {:dir "lib/repl-user"} "bb test"))}}

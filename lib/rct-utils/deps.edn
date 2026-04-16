@@ -1,0 +1,16 @@
+{:paths ["lib/main/src"]
+
+ :deps {;; sorted
+        com.taoensso/timbre {:mvn/version "6.8.0"}
+        dev.weavejester/medley {:mvn/version "1.9.0"}
+        ;io.github.matthewdowney/rich-comment-tests {:git/tag "v1.0.3" :git/sha "a8711e9"}}}
+        ;io.github.robertluo/rich-comment-tests #:git{:sha "22ea82d321b99f659f18c5b8822859292bd1026cn"}}}
+        io.github.rynkowsg/rich-comment-tests #:git{:branch "main" :sha "0e339b0648b808b3770a64253b489327b806bccb"}}
+
+ :aliases
+ {:test
+  {:extra-paths ["lib/test/src"]}
+
+  :tool/kaocha
+  {:extra-deps {lambdaisland/kaocha {:mvn/version "1.91.1392"}}}
+  #_:aliases}}

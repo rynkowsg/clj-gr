@@ -1,0 +1,18 @@
+{:deps
+ {;; sorted
+  pl.rynkowski.clj-gr/bb #:git{:url "https://github.com/rynkowsg/clj-gr.git" :tag "v0.0.12" :sha "05be32e01c53aedac4248ba03bb7703dc030c49a" :deps/root "lib/bb"}}
+
+ :tasks
+ {:requires ([clojure.string :as str]
+             [pl.rynkowski.clj-gr.bb :refer [print-exec deps-map]])
+
+  tool:kaocha:clj (print-exec '(clojure "-M:test:tool/kaocha -m kaocha.runner --config-file tests.edn") *command-line-args*)
+  tool:kaocha:bb {:task (let [deps-map (pr-str (deps-map {:path "deps.edn" :aliases [:test :tool/kaocha]}))
+                              cmd (format "bb -Sdeps '%s' -m kaocha.runner/-main --config-file tests.edn %s" deps-map (str/join " " *command-line-args*))]
+                          (println (format "CMD: %s" cmd))
+                          (shell cmd))}
+  test:unit:clj (print-exec '(shell "bb tool:kaocha:clj :unit") *command-line-args*)
+  test:unit:bb (print-exec '(shell "bb tool:kaocha:bb :unit") *command-line-args*)
+  test {:depends [test:unit:bb test:unit:clj]}
+
+  #_:tasks}}

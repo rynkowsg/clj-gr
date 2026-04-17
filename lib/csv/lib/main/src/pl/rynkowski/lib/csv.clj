@@ -35,7 +35,7 @@
    (maps->table {} maps))
   ([{:keys [header-keys header-transform-fn]} maps]
    (let [header-transform-fn' (or header-transform-fn name)
-         header-keys' (or header-keys (-> maps first keys))
+         header-keys' (or header-keys (distinct (mapcat keys maps)))
          csv-header (->> header-keys' (mapv header-transform-fn'))
          csv-values (->> maps (mapv #(map->row header-keys' %)))]
      (into [csv-header] csv-values))))

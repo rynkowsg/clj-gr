@@ -15,4 +15,4 @@
   (require '[clojure.string :as str])
   (System/getProperty "user.dir") ; =>> #(str/ends-with? % "lib/fs")
   (with-cwd "/some-path" (System/getProperty "user.dir")) :=> "/some-path"
- #_:_)
+  #_:_)

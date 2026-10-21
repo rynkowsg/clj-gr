@@ -1,6 +1,7 @@
 {:paths ["lib/main/src"]
 
  :deps {;; sorted
+        com.cognitect.aws/api {:mvn/version "0.8.847"}
         com.cognitect.aws/endpoints {:mvn/version "871.2.57.0"}
         com.cognitect.aws/ssm {:mvn/version "871.2.55.7" :aws/serviceFullName "Amazon Simple Systems Manager (SSM)"}
         pl.rynkowski.clj-gr/aws-api #:git{:url "https://github.com/rynkowsg/clj-gr.git" :tag "v0.0.16" :sha "0faa2b49cff2ececa783c43201971b5195c86054" :deps/root "lib/aws-api"}}

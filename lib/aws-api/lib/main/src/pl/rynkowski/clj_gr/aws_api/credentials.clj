@@ -1,50 +1,68 @@
 (ns pl.rynkowski.clj-gr.aws-api.credentials
   (:require
-    [pl.rynkowski.clj-gr.aws-api.internal.utils :refer [try-require]]))
+    [cognitect.aws.client.api :as aws]
+    [cognitect.aws.credentials :refer [CredentialsProvider
+                                       fetch
+                                       Stoppable
+                                       -stop
+                                       cached-credentials-with-auto-refresh
+                                       valid-credentials
+                                       environment-credentials-provider
+                                       system-property-credentials-provider
+                                       profile-credentials-provider
+                                       calculate-ttl
+                                       container-credentials-provider
+                                       instance-profile-credentials-provider
+                                       instance-profile-IMDSv2-credentials-provider]]))
 
-(let [[backend
-       CredentialsProvider
-       Stoppable
-       cached-credentials-with-auto-refresh
-       valid-credentials
-       stop
-       chain-credentials-provider
-       chain-credentials-provider-v2
-       environment-credentials-provider
-       system-property-credentials-provider
-       profile-credentials-provider
-       calculate-ttl
-       container-credentials-provider
-       instance-profile-credentials-provider
-       instance-profile-IMDSv2-credentials-provider
-       default-credentials-provider
-       default-credentials-provider-v2
-       basic-credentials-provider
-       fetch-async
-       assumed-role-credentials-provider
-       #_:end] (or
-                 ;; this should always work in babashka
-                 (try-require 'pl.rynkowski.clj-gr.aws-api.internal.awyeah.credentials/fns)
-                 ;; this needs to be added to the classpath explicitly
-                 (try-require 'pl.rynkowski.clj-gr.aws-api.internal.cognitect.credentials/fns))]
-  (def backend backend)
-  (def CredentialsProvider CredentialsProvider)
-  (def Stoppable Stoppable)
-  (def cached-credentials-with-auto-refresh cached-credentials-with-auto-refresh)
-  (def valid-credentials valid-credentials)
-  (def stop stop)
-  (def chain-credentials-provider chain-credentials-provider)
-  (def chain-credentials-provider-v2 chain-credentials-provider-v2)
-  (def environment-credentials-provider environment-credentials-provider)
-  (def system-property-credentials-provider system-property-credentials-provider)
-  (def profile-credentials-provider profile-credentials-provider)
-  (def calculate-ttl calculate-ttl)
-  (def container-credentials-provider container-credentials-provider)
-  (def instance-profile-credentials-provider instance-profile-credentials-provider)
-  (when instance-profile-IMDSv2-credentials-provider
-    (def instance-profile-IMDSv2-credentials-provider instance-profile-IMDSv2-credentials-provider))
-  (def default-credentials-provider default-credentials-provider)
-  (def default-credentials-provider-v2 default-credentials-provider-v2)
-  (def basic-credentials-provider basic-credentials-provider)
-  (def fetch-async fetch-async)
-  (def assumed-role-credentials-provider assumed-role-credentials-provider))
+(defn chain-credentials-provider-v2
+  [{:keys [providers valid-provider-cached?] :or {valid-provider-cached? true}}]
+  (let [cached-provider (atom nil)]
+    (reify
+      CredentialsProvider
+      (fetch [_]
+        (valid-credentials
+          (if (and valid-provider-cached? @cached-provider)
+            (fetch @cached-provider)
+            (some (fn [provider]
+                    (when-let [creds (fetch provider)]
+                      (reset! cached-provider provider)
+                      creds))
+                  providers))))
+      Stoppable
+      (-stop [_] (run! -stop providers)))))
+
+(defn default-credentials-provider-v2
+  [{:keys [http-client valid-provider-cached?]}]
+  (chain-credentials-provider-v2
+    {:providers [(environment-credentials-provider)
+                 (system-property-credentials-provider)
+                 (profile-credentials-provider)
+                 (container-credentials-provider http-client)
+                 (instance-profile-IMDSv2-credentials-provider http-client)
+                 (instance-profile-credentials-provider http-client)]
+     :valid-provider-cached? valid-provider-cached?}))
+
+(defn assumed-role-credentials-provider
+  "Returns a CredentialsProvider that calls STS:AssumeRole using `source-provider`.
+   Wrapped with cached auto-refresh so creds renew before expiration."
+  [{:keys [source-provider role-arn http-client session-name]
+    :or {http-client (aws/default-http-client)
+         session-name (str (System/currentTimeMillis))}}]
+  (let [sts-request (cond-> {:api :sts
+                             :http-client http-client}
+                            source-provider (assoc :credentials-provider source-provider))
+        sts (aws/client sts-request)
+        base (reify CredentialsProvider
+               (fetch [_]
+                 (let [resp (aws/invoke sts {:op :AssumeRole
+                                             :request {:RoleArn role-arn
+                                                       :RoleSessionName session-name}})
+                       {:keys [AccessKeyId SecretAccessKey SessionToken Expiration]} (:Credentials resp)
+                       res {:aws/access-key-id AccessKeyId
+                            :aws/secret-access-key SecretAccessKey
+                            :aws/session-token SessionToken
+                            ;; ttl drives auto-refresh
+                            :cognitect.aws.credentials/ttl (calculate-ttl {:Expiration Expiration})}]
+                   res)))]
+    (cached-credentials-with-auto-refresh base)))

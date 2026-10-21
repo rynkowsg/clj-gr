@@ -9,9 +9,10 @@
 (def default-client
   (delay
     (gr-aws/client* {:api :ssm :validate-requests? true})))
-#_(-> @default-client aws/ops)
-#_(-> @default-client aws/ops keys sort)
-#_(-> @default-client aws/doc-str :DescribeParametersRequest)
+(comment
+  (-> @default-client aws/ops)
+  (-> @default-client aws/ops keys sort)
+  (-> @default-client aws/doc-str :DescribeParametersRequest))
 
 (defn get-param
   "Reads an SSM parameter. Returns nil when the parameter does not exist

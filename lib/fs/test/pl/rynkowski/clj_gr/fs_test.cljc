@@ -1,4 +1,4 @@
-(ns pl.rynkowski.clj-gr.fs_test
+(ns pl.rynkowski.clj-gr.fs-test
   (:require
     [clojure.test :refer [deftest]]
     [com.mjdowney.rich-comment-tests.test-runner :as test-runner]))

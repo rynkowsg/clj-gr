@@ -12,6 +12,7 @@
 
 ^:rct/test
 (comment #_((requiring-resolve 'com.mjdowney.rich-comment-tests/run-ns-tests!) *ns*)
+  #_{:clj-kondo/ignore [:unused-namespace]}
   (require '[clojure.string :as str])
   (System/getProperty "user.dir") ; =>> #(str/ends-with? % "lib/fs")
   (with-cwd "/some-path" (System/getProperty "user.dir")) :=> "/some-path"

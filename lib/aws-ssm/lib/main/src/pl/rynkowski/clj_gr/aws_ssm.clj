@@ -1,5 +1,6 @@
 (ns pl.rynkowski.clj-gr.aws-ssm
   (:require
+    [camel-snake-kebab.core :as csk]
     [cognitect.aws.client.api :as aws]
     [pl.rynkowski.clj-gr.aws-api.client.api :as gr-aws]))
 
@@ -13,24 +14,42 @@
 #_(-> @default-client aws/ops keys sort)
 #_(-> @default-client aws/doc-str :DescribeParametersRequest)
 
-(defn param
-  "Returns the plaintext value of an SSM parameter (supports SecureString)."
-  ([{:keys [client name] :or {client @default-client}}]
-   (let [resp (gr-aws/invoke! client {:op :GetParameter
-                                      :request {:Name name
-                                                :WithDecryption true}})]
-     (-> resp))))
-#_(param {:name "/sample/API_KEY"})
+(defn get-param
+  [{:keys [client name] :or {client @default-client}}]
+  (let [resp (gr-aws/invoke! client {:op :GetParameter
+                                     :request {:Name name
+                                               :WithDecryption true}})]
+    (-> {:status :success :val (some-> resp :Parameter :Value)}
+        (vary-meta assoc :aws-resp resp))))
+#_(get-param {:name "/sample/API_KEY"})
 
 (defn put-param!
-  [{:keys [client name value] :or {client @default-client}}]
+  "Writes an SSM parameter.
+   `type` is :secure-string (default) or :string, in any case style,
+   e.g. :SecureString or :secure_string."
+  [{:keys [client name value type] :or {client @default-client type :secure-string}}]
   (let [resp (gr-aws/invoke! client {:op :PutParameter
                                      :request {:Name name
                                                :Value value
-                                               :Type "SecureString"
+                                               :Type (csk/->PascalCaseString type)
                                                :Overwrite true}})]
-    resp))
+    (-> {:status :success}
+        (vary-meta assoc :aws-resp resp))))
 #_(put-param! {:name "/sample/API_KEY" :value "TEST_VALUE"})
+#_(put-param! {:name "/sample/REGION" :value "eu-west-2" :type :string})
+
+(defn del-param!
+  [{:keys [client name] :or {client @default-client}}]
+  (let [resp (gr-aws/invoke! client {:op :DeleteParameter
+                                     :request {:Name name}})]
+    resp))
+#_(del-param! {:name "/sample/API_KEY"})
+
+(defn copy-param!
+  [{:keys [client src-name dst-name] :or {client @default-client}}]
+  (let [v (-> (get-param {:client client :name src-name}) :val)]
+    (put-param! {:client client :name dst-name :value v})))
+#_(copy-param! {:src-name "/sample/API_KEY" :dst-name "/sample/API_KEY_COPY"})
 
 (defn list-parameters-page
   "Fetch a single DescribeParameters page.

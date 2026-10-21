@@ -1,6 +1,7 @@
 {:paths ["lib/main/src"]
 
  :deps {;; sorted
+        camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.3"}
         com.cognitect.aws/api {:mvn/version "0.8.847"}
         com.cognitect.aws/endpoints {:mvn/version "871.2.57.0"}
         com.cognitect.aws/ssm {:mvn/version "871.2.55.7" :aws/serviceFullName "Amazon Simple Systems Manager (SSM)"}

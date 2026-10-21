@@ -1,57 +1,27 @@
 version: 2.1
 
 orbs:
-  asdf: rynkowsg/asdf@0.2.0
   checkout: rynkowsg/checkout@0.3.1
+  mise: rynkowsg/mise@0.1.0
 
 executors:
-  docker_x86_cimg:
-    docker: [{image: cimg/base:2024.02}]
+  docker_base_small_x86:
     # https://circleci.com/developer/images/image/cimg/base
+    # https://hub.docker.com/r/cimg/base/tags
+    docker: [{image: 'cimg/base:2026.09-24.04'}]
     resource_class: small
-    # https://circleci.com/docs/configuration-reference/#docker-execution-environment
 
 jobs:
   test:
-    executor: docker_x86_cimg
+    executor: docker_base_small_x86
     steps:
       - checkout/checkout: {depth: 1}
-      - asdf/install: {version: 0.14.0}
-      - restore_cache:
-          name: asdf - restore cache (partial)
-          keys:
-            - asdf-{{ checksum ".tool-versions" }}
-      - run:
-          name: asdf - add plugin
-          command: |
-            set -x
-            cd /tmp
-            git config --global advice.detachedHead false
-            asdf plugin add babashka https://github.com/fredZen/asdf-babashka.git
-            asdf plugin add clj-kondo https://github.com/rynkowsg/asdf-clj-kondo.git
-            asdf plugin add clojure https://github.com/halcyon/asdf-clojure.git
-            asdf plugin add java https://github.com/rynkowsg/asdf-java.git
-      - run:
-          name: asdf - install tools
-          command: |
-            set -x
-            # java needs to be installed ahead of the rest. Otherwise clojure installation would fail.
-            asdf install java
-            . ~/.asdf/plugins/java/set-java-home.bash
-            asdf install babashka
-            asdf install clj-kondo
-            asdf install clojure
-            bb --version
-            clojure --version
-            clj-kondo --version
-            java --version
-      - save_cache:
-          name: asdf - save cache (partial)
-          key: asdf-{{ checksum ".tool-versions" }}
-          paths:
-            - ~/.asdf/installs
-            - ~/.asdf/plugins
-            - ~/.asdf/shims
+      - mise/setup:
+          mise_version: v2026.10.11 # https://github.com/jdx/mise/releases
+          # java is here because babashka and clojure need it.
+          tools: >-
+            babashka java
+            clojure
       - run: bb test
 
 workflows:

@@ -1,3 +1,7 @@
 {:paths ["lib/main/src"]
 
- :deps {com.cognitect.aws/api {:mvn/version "0.8.847"}}} ;; https://github.com/cognitect-labs/aws-api/blob/main/latest-releases.edn
+ :deps {;; sorted
+        com.cognitect.aws/api {:mvn/version "0.8.847"} ;; https://github.com/cognitect-labs/aws-api/blob/main/latest-releases.edn
+        pl.rynkowski.awscredentials/aws-api-extras #:git{:url "https://github.com/rynkowsg/aws-credentials.git" :tag "0.2.0" :sha "e111d510076e26eefd60cedad60def8ce8535dde" :deps/root "aws-api-extras"}
+        #_:deps}
+ #_:end}
